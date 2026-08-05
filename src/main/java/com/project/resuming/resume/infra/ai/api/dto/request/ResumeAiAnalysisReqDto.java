@@ -5,7 +5,7 @@ import lombok.Builder;
 @Builder
 public record ResumeAiAnalysisReqDto(
 		Resume resume,
-		String currentCountry,    // 현재 거주 국가
+		String currentCountry,
 		JobPosting jobPosting
 ) {
 	@Builder

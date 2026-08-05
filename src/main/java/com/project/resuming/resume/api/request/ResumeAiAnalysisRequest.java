@@ -2,9 +2,9 @@ package com.project.resuming.resume.api.request;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public record ResumeAiRecommendRequest(
-        String userText,
-        MultipartFile userImage,
+public record ResumeAiAnalysisRequest(
+        String resumeText,
+        MultipartFile resumeImage,
         String jobText,
         MultipartFile jobImage,
         String targetCountry

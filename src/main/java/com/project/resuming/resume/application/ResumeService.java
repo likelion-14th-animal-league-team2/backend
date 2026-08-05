@@ -4,11 +4,8 @@ import com.project.resuming.common.exception.BusinessException;
 import com.project.resuming.common.response.ErrorCode;
 import com.project.resuming.member.domain.Member;
 import com.project.resuming.member.domain.repository.MemberRepository;
+import com.project.resuming.resume.api.response.ResumeInfoListResDto;
 import com.project.resuming.resume.api.response.ResumeInfoResDto;
-import com.project.resuming.resume.domain.Resume;
-import com.project.resuming.resume.domain.repository.ResumeRepository;
-
-import com.project.resuming.selfresume.api.response.SelfResumeInfoListResDto;
 import com.project.resuming.selfresume.api.response.SelfResumeInfoResDto;
 import com.project.resuming.selfresume.domain.SelfResume;
 import com.project.resuming.selfresume.domain.repository.SelfResumeRepository;
@@ -42,7 +39,7 @@ public class ResumeService {
     }
 
     //전체 조회
-    public SelfResumeInfoListResDto findAll(Long memberId){
+    public ResumeInfoListResDto findAll(Long memberId){
 
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new BusinessException(
@@ -50,8 +47,8 @@ public class ResumeService {
                         ErrorCode.MEMBER_NOT_FOUND_EXCEPTION.getMessage()
                 ));
 
-        List<SelfResumeInfoResDto> resumes = resumeTempRepository.findByMember(member).stream().map(SelfResumeInfoResDto::from).toList();
-        return SelfResumeInfoListResDto.from(resumes);
+        List<ResumeInfoResDto> resumes = resumeTempRepository.findByMember(member).stream().map(ResumeInfoResDto::from).toList();
+        return ResumeInfoListResDto.from(resumes);
     }
 
 

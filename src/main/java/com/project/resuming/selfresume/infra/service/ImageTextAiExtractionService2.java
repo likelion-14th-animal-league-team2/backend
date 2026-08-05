@@ -2,11 +2,11 @@ package com.project.resuming.selfresume.infra.service;
 
 import com.project.resuming.common.exception.BusinessException;
 import com.project.resuming.common.response.ErrorCode;
+import lombok.RequiredArgsConstructor;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.content.Media;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MimeType;
 import org.springframework.util.MimeTypeUtils;
@@ -14,13 +14,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 @Service
+@RequiredArgsConstructor
 public class ImageTextAiExtractionService2 {
 
-    private final ChatClient chatClient;
+    private final ChatClient imageToTextChatClient;
 
-    public ImageTextAiExtractionService2(@Qualifier("imageToTextChatClient") ChatClient chatClient) {
-        this.chatClient = chatClient;
-    }
 
     //llm호출해서 이미지에서 텍스트 추출
     public String extractImageText(MultipartFile image){
@@ -37,7 +35,7 @@ public class ImageTextAiExtractionService2 {
 
         Prompt  prompt = new Prompt(userMessage);
 
-        return chatClient.prompt(prompt)
+        return imageToTextChatClient.prompt(prompt)
                 .call()
                 .content();
 

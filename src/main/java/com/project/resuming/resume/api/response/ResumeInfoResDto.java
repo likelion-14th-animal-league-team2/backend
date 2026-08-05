@@ -1,7 +1,6 @@
 package com.project.resuming.resume.api.response;
 
-import com.project.resuming.resume.domain.Resume;
-import com.project.resuming.resume.infra.ai.api.dto.response.ResumeAiAnalysisResDto;
+
 import com.project.resuming.selfresume.domain.SelfResume;
 import lombok.Builder;
 

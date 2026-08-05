@@ -5,20 +5,18 @@ import com.project.resuming.common.exception.BusinessException;
 import com.project.resuming.common.response.ErrorCode;
 import com.project.resuming.member.domain.Member;
 import com.project.resuming.member.domain.repository.MemberRepository;
-import com.project.resuming.resume.api.request.ResumeAiRecommendRequest;
+import com.project.resuming.resume.api.request.ResumeAiAnalysisRequest;
 import com.project.resuming.resume.domain.Resume;
 import com.project.resuming.resume.infra.ai.api.dto.request.ResumeAiAnalysisReqDto;
 import com.project.resuming.resume.infra.ai.api.dto.response.ResumeAiAnalysisResDto;
 import com.project.resuming.resume.domain.repository.ResumeRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.util.Optional;
+
 
 @Service
 @Transactional(readOnly = true)
@@ -44,10 +42,10 @@ public class ResumeAiService {
     흐름 : 프론트 -> 백엔드 -> 백엔드에서 이미지에서 텍스트 추출 -> 텍스트 데이터만 ai로 -> 최종 응답 Json반환 -> 프론트 전달
      */
     @Transactional
-    public Resume getResumeAiAdvice(String userText, MultipartFile userImage, String jobText, MultipartFile jobImage, Long memberId){
+    public Resume getResumeAiAdvice(String resumeText, MultipartFile resumeImage, String jobText, MultipartFile jobImage, Long memberId){
 
         //이미지로 텍스트 추출
-        String userImageText = imageTextAiExtractionService.extractImageText(userImage);
+        String userImageText = imageTextAiExtractionService.extractImageText(resumeImage);
         String jobImageText = imageTextAiExtractionService.extractImageText(jobImage);
 
         Member member = memberRepository.findById(memberId)
@@ -62,7 +60,7 @@ public class ResumeAiService {
         //ai 서버요청 dto생성
         ResumeAiAnalysisReqDto resumeAiAnalysisReqDto = ResumeAiAnalysisReqDto.builder()
                 .resume(ResumeAiAnalysisReqDto.Resume.builder()
-                        .text(userText)
+                        .text(resumeText)
                         .imageText(userImageText)
                         .build())
                 .currentCountry(country)
@@ -104,11 +102,11 @@ public class ResumeAiService {
 
 
     //이미지 ->텍스트 추출 테스트 함수
-    public String imageTextTest(ResumeAiRecommendRequest request){
-        MultipartFile userImage = request.userImage();
+    public String imageTextTest(ResumeAiAnalysisRequest request){
+        MultipartFile resumeImage = request.resumeImage();
         MultipartFile jobImage = request.jobImage();
 
-        String userImageText = imageTextAiExtractionService.extractImageText(userImage);
+        String userImageText = imageTextAiExtractionService.extractImageText(resumeImage);
         String jobImageText = imageTextAiExtractionService.extractImageText(jobImage);
         return userImageText + " ::::::::::: " + jobImageText;
 

@@ -1,6 +1,5 @@
 package com.project.resuming.selfresume.infra.api.dto.request;
 
-import com.project.resuming.selfresume.domain.SelfResume;
 import lombok.Builder;
 
 @Builder

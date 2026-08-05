@@ -5,26 +5,18 @@ import com.project.resuming.common.exception.BusinessException;
 import com.project.resuming.common.response.ErrorCode;
 import com.project.resuming.member.domain.Member;
 import com.project.resuming.member.domain.repository.MemberRepository;
-import com.project.resuming.resume.api.request.ResumeAiRecommendRequest;
-import com.project.resuming.resume.domain.Resume;
-import com.project.resuming.resume.infra.ai.api.dto.request.ResumeAiAnalysisReqDto;
-import com.project.resuming.resume.infra.ai.api.dto.response.ResumeAiAnalysisResDto;
-import com.project.resuming.resume.domain.repository.ResumeRepository;
-import com.project.resuming.resume.infra.ai.service.ImageTextAiExtractionService;
-import com.project.resuming.selfresume.api.request.SelfResumeAiRecommendRequest;
+import com.project.resuming.selfresume.api.request.SelfResumeAiAnalysisRequest;
 import com.project.resuming.selfresume.api.response.SelfResumeInfoResDto;
 import com.project.resuming.selfresume.domain.SelfResume;
 import com.project.resuming.selfresume.domain.repository.SelfResumeRepository;
 import com.project.resuming.selfresume.infra.api.dto.response.SelfResumeAiAnalysisResDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -34,7 +26,7 @@ public class SelfResumeAiService {
     //스프링 서버 스스로 요청 보내는 버전
 
     private final ChatClient resumeAnalysisChatClient;
-    private final SelfResumeRepository resumeRepository;
+    private final SelfResumeRepository selfResumeRepository;
     private final ImageTextAiExtractionService2 imageTextAiExtractionService;
     private final MemberRepository memberRepository;
     private final WebClient webClient;
@@ -50,10 +42,10 @@ public class SelfResumeAiService {
     흐름 : 프론트 -> 백엔드 -> 백엔드에서 이미지에서 텍스트 추출 -> 텍스트 데이터만 ai로 -> 최종 응답 Json반환 -> 프론트 전달
      */
     @Transactional
-    public SelfResumeInfoResDto getResumeAiAdvice(SelfResumeAiRecommendRequest request, Long memberId){
+    public SelfResumeInfoResDto getResumeAiAdvice(SelfResumeAiAnalysisRequest request, Long memberId){
 
         //이미지로 텍스트 추출
-        String userImageText = imageTextAiExtractionService.extractImageText(request.userImage());
+        String resumeImageText = imageTextAiExtractionService.extractImageText(request.resumeImage());
         String jobImageText = imageTextAiExtractionService.extractImageText(request.jobImage());
 
         Member member = memberRepository.findById(memberId)
@@ -70,8 +62,8 @@ public class SelfResumeAiService {
 
         //유저 메시지(프롬프트) 구성
         String userMessage = buildUserMessage(
-                request.userText(),
-                userImageText,
+                request.resumeText(),
+                resumeImageText,
                 request.jobText(),
                 jobImageText,
                 currentCountry,
@@ -101,7 +93,7 @@ public class SelfResumeAiService {
                 .member(member)
                 .build();
 
-        resumeRepository.save(selfresume);
+        selfResumeRepository.save(selfresume);
 
         return SelfResumeInfoResDto.from(selfresume);
 
@@ -154,8 +146,8 @@ public class SelfResumeAiService {
 
 
     //이미지 ->텍스트 추출 테스트 함수
-    public String imageTextTest(SelfResumeAiRecommendRequest request){
-        MultipartFile userImage = request.userImage();
+    public String imageTextTest(SelfResumeAiAnalysisRequest request){
+        MultipartFile userImage = request.resumeImage();
         MultipartFile jobImage = request.jobImage();
 
         String userImageText = imageTextAiExtractionService.extractImageText(userImage);

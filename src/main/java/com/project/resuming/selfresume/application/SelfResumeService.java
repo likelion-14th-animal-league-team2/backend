@@ -23,7 +23,6 @@ public class SelfResumeService {
     private final SelfResumeRepository resumeTempRepository;
     private final MemberRepository memberRepository;
 
-
     //id로 조회
     public SelfResumeInfoResDto findById(Long id){
         SelfResume selfResume = resumeTempRepository.findById(id)
@@ -44,8 +43,8 @@ public class SelfResumeService {
                         ErrorCode.MEMBER_NOT_FOUND_EXCEPTION.getMessage()
                 ));
 
-        List<SelfResumeInfoResDto> resumes = resumeTempRepository.findByMember(member).stream().map(SelfResumeInfoResDto::from).toList();
-        return SelfResumeInfoListResDto.from(resumes);
+        List<SelfResumeInfoResDto> resumList = resumeTempRepository.findByMember(member).stream().map(SelfResumeInfoResDto::from).toList();
+        return SelfResumeInfoListResDto.from(resumList);
     }
 
 

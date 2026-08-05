@@ -14,8 +14,8 @@ public class SelfResume {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "resume_id")
-    private Long resumeId;
+    @Column(name = "self_resume_id")
+    private Long id;
 
     @Column(columnDefinition = "TEXT")
     private String strengthAnalysis;

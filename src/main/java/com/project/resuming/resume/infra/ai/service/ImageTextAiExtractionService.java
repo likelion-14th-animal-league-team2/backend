@@ -2,6 +2,7 @@ package com.project.resuming.resume.infra.ai.service;
 
 import com.project.resuming.common.exception.BusinessException;
 import com.project.resuming.common.response.ErrorCode;
+import lombok.RequiredArgsConstructor;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.prompt.Prompt;
@@ -14,13 +15,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 @Service
+@RequiredArgsConstructor
 public class ImageTextAiExtractionService {
 
-    private final ChatClient chatClient;
+    private final ChatClient imageToTextChatClient;
 
-    public ImageTextAiExtractionService(@Qualifier("imageToTextChatClient") ChatClient chatClient) {
-        this.chatClient = chatClient;
-    }
 
     //llm호출해서 이미지에서 텍스트 추출
     public String extractImageText(MultipartFile image){
@@ -37,7 +36,7 @@ public class ImageTextAiExtractionService {
 
         Prompt  prompt = new Prompt(userMessage);
 
-        return chatClient.prompt(prompt)
+        return imageToTextChatClient.prompt(prompt)
                 .call()
                 .content();
 
