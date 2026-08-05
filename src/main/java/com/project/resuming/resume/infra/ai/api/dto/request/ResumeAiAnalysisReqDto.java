@@ -5,7 +5,7 @@ import lombok.Builder;
 @Builder
 public record ResumeAiAnalysisReqDto(
 		Resume resume,
-		String country,
+		String currentCountry,    // 현재 거주 국가
 		JobPosting jobPosting
 ) {
 	@Builder
@@ -17,6 +17,7 @@ public record ResumeAiAnalysisReqDto(
 	@Builder
 	public record JobPosting(
 			String text,
-			String imageText
+			String imageText,
+			String targetCountry
 	) {}
 }

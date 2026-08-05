@@ -1,25 +1,25 @@
-package com.project.resuming.resume.api;
+package com.project.resuming.selfresume.api;
 
 import com.project.resuming.common.response.ApiResTemplate;
 import com.project.resuming.common.response.SuccessCode;
 import com.project.resuming.resume.api.request.ResumeAiRecommendRequest;
-import com.project.resuming.resume.application.ResumeService;
-import com.project.resuming.resume.infra.ai.service.ResumeAiService;
-
+import com.project.resuming.resume.domain.Resume;
+import com.project.resuming.selfresume.api.request.SelfResumeAiRecommendRequest;
 import com.project.resuming.selfresume.api.response.SelfResumeInfoListResDto;
 import com.project.resuming.selfresume.api.response.SelfResumeInfoResDto;
+import com.project.resuming.selfresume.application.SelfResumeService;
+import com.project.resuming.selfresume.infra.service.SelfResumeAiService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/resume")
-public class ResumeController {
+@RequestMapping("/selfresume")
+public class SelfResumeController {
 
-    private final ResumeService resumeService;
-    private final ResumeAiService resumeAiService;
+    private final SelfResumeService resumeService;
+    private final SelfResumeAiService resumeAiService;
 
     //resume Id조회
     @GetMapping("{id}")
@@ -50,12 +50,12 @@ public class ResumeController {
 //    };
 
     //
-    @PostMapping(value = "/imagetext", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ApiResTemplate<String> resumeAiRecommend(
-            @ModelAttribute ResumeAiRecommendRequest request
+    @PostMapping(value = "/ai", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ApiResTemplate<SelfResumeInfoResDto> resumeAiRecommend(
+            @ModelAttribute SelfResumeAiRecommendRequest request, @RequestParam(name = "memberId") Long memberId
     ) {
-        String s = resumeAiService.imageTextTest(request);
-        return ApiResTemplate.successResponse(SuccessCode.GET_SUCCESS, s);
+        SelfResumeInfoResDto resumeAiAdvice = resumeAiService.getResumeAiAdvice(request, memberId);
+        return ApiResTemplate.successResponse(SuccessCode.GET_SUCCESS, resumeAiAdvice);
     };
 
 

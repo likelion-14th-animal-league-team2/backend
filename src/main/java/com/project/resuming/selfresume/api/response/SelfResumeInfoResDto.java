@@ -1,12 +1,11 @@
-package com.project.resuming.resume.api.response;
+package com.project.resuming.selfresume.api.response;
 
-import com.project.resuming.resume.domain.Resume;
-import com.project.resuming.resume.infra.ai.api.dto.response.ResumeAiAnalysisResDto;
+
 import com.project.resuming.selfresume.domain.SelfResume;
 import lombok.Builder;
 
 @Builder
-public record ResumeInfoResDto(
+public record SelfResumeInfoResDto(
 
         Long resumeId,
         String strengthAnalysis,
@@ -16,8 +15,8 @@ public record ResumeInfoResDto(
 
 ) {
 
-    public static ResumeInfoResDto from(SelfResume resume){
-        return ResumeInfoResDto.builder()
+    public static SelfResumeInfoResDto from(SelfResume resume){
+        return SelfResumeInfoResDto.builder()
                 .strengthAnalysis(resume.getStrengthAnalysis())
                 .improvementAreas(resume.getImprovementAreas())
                 .personalizedCoachingInsight(resume.getPersonalizedCoachingInsight())

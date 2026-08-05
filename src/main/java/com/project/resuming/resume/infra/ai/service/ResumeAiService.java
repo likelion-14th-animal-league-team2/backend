@@ -27,7 +27,7 @@ public class ResumeAiService {
 
     //외부 ai서버용
 
-    private final ChatClient client; //Builder 사용해서 @RequiredArgsConstructor 사용불가
+    //Builder 사용해서 @RequiredArgsConstructor 사용불가
     private final ResumeRepository resumeRepository;
     private final ImageTextAiExtractionService imageTextAiExtractionService;
     private final MemberRepository memberRepository;
@@ -65,7 +65,7 @@ public class ResumeAiService {
                         .text(userText)
                         .imageText(userImageText)
                         .build())
-                .country(country)
+                .currentCountry(country)
                 .jobPosting(ResumeAiAnalysisReqDto.JobPosting.builder()
                         .text(jobText)
                         .imageText(jobImageText)
