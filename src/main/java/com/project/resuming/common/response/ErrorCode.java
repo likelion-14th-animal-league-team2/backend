@@ -16,6 +16,9 @@ public enum ErrorCode {
     //400 BAD REQUEST
     VALIDATION_EXCEPTION(HttpStatus.BAD_REQUEST, "유효성 검사에 실패하였습니다 - "),
 
+    //401 UNAUTHORIZED
+    NO_AUTHORIZATION_EXCEPTION(HttpStatus.UNAUTHORIZED, "권한이 없습니다."),
+
 
     // 500 INTERNAL SERVER ERROR (내부 서버 에러)
     IMAGE_CONVERSION_TO_TEXT_FAILED(HttpStatus.INTERNAL_SERVER_ERROR, "이미지 텍스트 변환에 실해하였습니다"),
