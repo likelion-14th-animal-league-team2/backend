@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -30,9 +31,9 @@ public class SelfResumeController {
         return ApiResTemplate.successResponse(SuccessCode.GET_SUCCESS,resume);
     }
 
-    @GetMapping("/all")
+    @GetMapping()
     @Operation(summary = "selfresume 전체 조회", description = "멤버가 가지고 있는 selfresume전체를 찾습니다. List반환")
-    public ApiResTemplate<SelfResumeInfoListResDto> findAll(@RequestParam(name = "memberId")Long memberId){
+    public ApiResTemplate<SelfResumeInfoListResDto> findAll(@AuthenticationPrincipal Long memberId){
         SelfResumeInfoListResDto resumeInfoListRes = resumeService.findAll(memberId);
         return ApiResTemplate.successResponse(SuccessCode.GET_SUCCESS, resumeInfoListRes);
     }
@@ -40,7 +41,7 @@ public class SelfResumeController {
     @Operation(summary = "ai가 이력서, 자소서를 분석합니다.", description = "이력서 제출")
     @PostMapping(value = "/ai", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ApiResTemplate<SelfResumeInfoResDto> resumeAiRecommend(
-            @ModelAttribute SelfResumeAiAnalysisReqDto request, @RequestParam(name = "memberId") Long memberId
+            @ModelAttribute SelfResumeAiAnalysisReqDto request, @AuthenticationPrincipal  Long memberId
     ) {
         SelfResumeInfoResDto resumeAiAdvice = resumeAiService.getResumeAiAdvice(request, memberId);
         return ApiResTemplate.successResponse(SuccessCode.GET_SUCCESS, resumeAiAdvice);

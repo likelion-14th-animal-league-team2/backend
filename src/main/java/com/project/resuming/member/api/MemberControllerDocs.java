@@ -1,7 +1,9 @@
 package com.project.resuming.member.api;
 
 import com.project.resuming.common.response.ApiResTemplate;
-import com.project.resuming.member.api.request.MemberJoinReqDto;
+import com.project.resuming.member.api.request.MemberLoginReqDto;
+import com.project.resuming.member.api.request.MemberSignUpReqDto;
+import com.project.resuming.member.api.response.MemberLoginResDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -13,12 +15,19 @@ import com.project.resuming.member.api.response.MemberInfoResDto;
 @Tag(name = "Member", description = "회원 관련 API")
 public interface MemberControllerDocs {
 
-    @Operation(summary = "회원가입", description = "이름과 이메일로 신규 회원을 등록합니다.")
+    @Operation(summary = "로컬 회원가입", description = "로컬 회원가입")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "회원가입 성공"),
             @ApiResponse(responseCode = "400", description = "이메일 형식 오류")
     })
-    ApiResTemplate<Void> save(MemberJoinReqDto memberJoinReqDto);
+    ApiResTemplate<Void> localSignUp(MemberSignUpReqDto memberJoinReqDto);
+
+    @Operation(summary = "로컬 로그인", description = "로컬 로그인")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "회원가입 성공"),
+            @ApiResponse(responseCode = "400", description = "이메일 형식 오류")
+    })
+    ApiResTemplate<MemberLoginResDto> localLogin(MemberLoginReqDto memberLoginReqDto);
 
     @Operation(summary = "멤버 id로 찾기", description = "멤버 id로 찾기")
     @ApiResponses({
