@@ -11,12 +11,15 @@ public enum ErrorCode {
 
     //404 NOT FOUND (찾을 수 없음)
     MEMBER_NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND, "해당 사용자가 없습니다. memberId = "),
+    RESUME_NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND, "해당 이력서가 없습니다. resumeId = "),
 
     //400 BAD REQUEST
     VALIDATION_EXCEPTION(HttpStatus.BAD_REQUEST, "유효성 검사에 실패하였습니다 - "),
 
 
     // 500 INTERNAL SERVER ERROR (내부 서버 에러)
+    IMAGE_CONVERSION_TO_TEXT_FAILED(HttpStatus.INTERNAL_SERVER_ERROR, "이미지 텍스트 변환에 실해하였습니다"),
+    AI_SERVER_EXCEPTION(HttpStatus.BAD_GATEWAY, "ai서버가 응답히지 않습니다."),
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "내부 서버 에러가 발생했습니다");
 
 
