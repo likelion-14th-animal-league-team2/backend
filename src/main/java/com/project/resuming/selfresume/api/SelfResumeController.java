@@ -2,7 +2,7 @@ package com.project.resuming.selfresume.api;
 
 import com.project.resuming.common.response.ApiResTemplate;
 import com.project.resuming.common.response.SuccessCode;
-import com.project.resuming.selfresume.api.request.SelfResumeAiAnalysisRequest;
+import com.project.resuming.selfresume.api.request.SelfResumeAiAnalysisReqDto;
 import com.project.resuming.selfresume.api.response.SelfResumeInfoListResDto;
 import com.project.resuming.selfresume.api.response.SelfResumeInfoResDto;
 import com.project.resuming.selfresume.application.SelfResumeService;
@@ -40,7 +40,7 @@ public class SelfResumeController {
     @Operation(summary = "ai가 이력서, 자소서를 분석합니다.", description = "이력서 제출")
     @PostMapping(value = "/ai", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ApiResTemplate<SelfResumeInfoResDto> resumeAiRecommend(
-            @ModelAttribute SelfResumeAiAnalysisRequest request, @RequestParam(name = "memberId") Long memberId
+            @ModelAttribute SelfResumeAiAnalysisReqDto request, @RequestParam(name = "memberId") Long memberId
     ) {
         SelfResumeInfoResDto resumeAiAdvice = resumeAiService.getResumeAiAdvice(request, memberId);
         return ApiResTemplate.successResponse(SuccessCode.GET_SUCCESS, resumeAiAdvice);

@@ -4,6 +4,7 @@ import com.project.resuming.common.response.ApiResTemplate;
 import com.project.resuming.common.response.SuccessCode;
 import com.project.resuming.resume.api.request.ResumeAiAnalysisRequest;
 import com.project.resuming.resume.api.response.ResumeInfoListResDto;
+import com.project.resuming.resume.api.response.ResumeInfoResDto;
 import com.project.resuming.resume.application.ResumeService;
 import com.project.resuming.resume.infra.ai.service.ResumeAiService;
 import com.project.resuming.selfresume.api.response.SelfResumeInfoResDto;
@@ -26,8 +27,8 @@ public class ResumeController {
     //resume Id조회
     @GetMapping("{id}")
     @Operation(summary = "Id로 resume조회", description = "resume pk로 resume 1개를 찾습니다")
-    public ApiResTemplate<SelfResumeInfoResDto> findById(@PathVariable(name = "id") Long resumeId){
-        SelfResumeInfoResDto resume = resumeService.findById(resumeId);
+    public ApiResTemplate<ResumeInfoResDto> findById(@PathVariable(name = "id") Long resumeId){
+        ResumeInfoResDto resume = resumeService.findById(resumeId);
         return ApiResTemplate.successResponse(SuccessCode.GET_SUCCESS,resume);
     }
 

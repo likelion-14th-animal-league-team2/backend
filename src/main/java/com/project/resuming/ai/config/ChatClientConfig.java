@@ -42,6 +42,7 @@ public class ChatClientConfig {
                     - 채용 공고 텍스트 (직접 입력 + 이미지에서 추출한 텍스트)
                     - 지원자가 거주하는 국가 (예: 대한민국, 미국, 일본 등)
                     - 지원자가 지원하는 국가 (예: 대한민국, 미국, 일본 등)
+                    - 지원자가 지원하는 회사이름
                     
                     다음 기준으로 분석해:
                     
@@ -60,12 +61,14 @@ public class ChatClientConfig {
                     각 필드는 summary와 상세 설명을 한 문단으로 자연스럽게 이어서 서술해.
                     
                     {
+                      "targetCompany": "지원 회사",
                       "strengthAnalysis": "지원자의 핵심 강점을 먼저 한 문장으로 요약하고, 이어서 이력서의 어떤 부분이 왜 강점인지, 공고와 어떻게 부합하는지 구체적으로 서술",
                       "improvementAreas": "개선이 필요한 부분을 먼저 한 문장으로 요약하고, 이어서 공고 요구사항 대비 어떤 부분이 미흡한지, 왜 그런지 구체적으로 서술",
                       "personalizedCoachingInsight": "맞춤형 코칭 인사이트를 먼저 한 문장으로 요약하고, 이어서 국가별 이력서 작성 관행과 문화를 반영한 실질적인 조언을 지원 국가의 특징을 명시적으로 언급하며 서술",
                       "aiRecommendedResumeContent": "지원 공고와 국가 관행에 맞춰 재작성한 이력서 추천 문구. 실제로 이력서에 바로 사용할 수 있는 수준의 구체적인 문장으로 작성"
                     }
                     
+                    targetCompany는 지원자가 지원하는 회사이름 그대로 반환.
                     strengthAnalysis, improvementAreas, personalizedCoachingInsight, personalizedCoachingInsight필드는 3~6문장 정도의 완결된 문단으로 작성해. 불필요한 미사여구나 형식적인 인사말은 넣지 마.
                     aiRecommendedResumeContent는 길어도 좋다.
                     """)

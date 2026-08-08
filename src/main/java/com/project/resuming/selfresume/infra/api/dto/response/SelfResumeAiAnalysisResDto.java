@@ -4,6 +4,7 @@ import lombok.Builder;
 
 @Builder
 public record SelfResumeAiAnalysisResDto(
+        String targetCompany,
         String strengthAnalysis,
         String improvementAreas,
         String personalizedCoachingInsight,

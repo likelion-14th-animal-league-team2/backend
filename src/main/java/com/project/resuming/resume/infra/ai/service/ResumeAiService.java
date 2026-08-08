@@ -38,11 +38,12 @@ public class ResumeAiService {
     2. 이력서 이미지 일단 1개만 제출하도록
     3. 공고 텍스트
     4. 공고 이미지 -> 일단 1개만 제출하도록
+    5. 지원 회사 이름, 프로젝트
 
     흐름 : 프론트 -> 백엔드 -> 백엔드에서 이미지에서 텍스트 추출 -> 텍스트 데이터만 ai로 -> 최종 응답 Json반환 -> 프론트 전달
      */
     @Transactional
-    public Resume getResumeAiAdvice(String resumeText, MultipartFile resumeImage, String jobText, MultipartFile jobImage, Long memberId){
+    public Resume getResumeAiAdvice(String resumeText, MultipartFile resumeImage,String targetCompany, String jobText, MultipartFile jobImage, Long memberId){
 
         //이미지로 텍스트 추출
         String userImageText = imageTextAiExtractionService.extractImageText(resumeImage);
@@ -64,6 +65,7 @@ public class ResumeAiService {
                         .imageText(userImageText)
                         .build())
                 .currentCountry(country)
+                .targetCompany(targetCompany)
                 .jobPosting(ResumeAiAnalysisReqDto.JobPosting.builder()
                         .text(jobText)
                         .imageText(jobImageText)

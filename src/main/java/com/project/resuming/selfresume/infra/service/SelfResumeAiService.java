@@ -5,7 +5,7 @@ import com.project.resuming.common.exception.BusinessException;
 import com.project.resuming.common.response.ErrorCode;
 import com.project.resuming.member.domain.Member;
 import com.project.resuming.member.domain.repository.MemberRepository;
-import com.project.resuming.selfresume.api.request.SelfResumeAiAnalysisRequest;
+import com.project.resuming.selfresume.api.request.SelfResumeAiAnalysisReqDto;
 import com.project.resuming.selfresume.api.response.SelfResumeInfoResDto;
 import com.project.resuming.selfresume.domain.SelfResume;
 import com.project.resuming.selfresume.domain.repository.SelfResumeRepository;
@@ -42,7 +42,7 @@ public class SelfResumeAiService {
     흐름 : 프론트 -> 백엔드 -> 백엔드에서 이미지에서 텍스트 추출 -> 텍스트 데이터만 ai로 -> 최종 응답 Json반환 -> 프론트 전달
      */
     @Transactional
-    public SelfResumeInfoResDto getResumeAiAdvice(SelfResumeAiAnalysisRequest request, Long memberId){
+    public SelfResumeInfoResDto getResumeAiAdvice(SelfResumeAiAnalysisReqDto request, Long memberId){
 
         //이미지로 텍스트 추출
         String resumeImageText = imageTextAiExtractionService.extractImageText(request.resumeImage());
@@ -64,6 +64,7 @@ public class SelfResumeAiService {
         String userMessage = buildUserMessage(
                 request.resumeText(),
                 resumeImageText,
+                request.targetCompany(),
                 request.jobText(),
                 jobImageText,
                 currentCountry,
@@ -86,6 +87,7 @@ public class SelfResumeAiService {
 
         // 5. 최종 저장
         SelfResume selfresume = SelfResume.builder()
+                .targetCompany(result.targetCompany())
                 .strengthAnalysis(result.strengthAnalysis())
                 .improvementAreas(result.improvementAreas())
                 .personalizedCoachingInsight(result.personalizedCoachingInsight())
@@ -104,6 +106,7 @@ public class SelfResumeAiService {
     private String buildUserMessage(
             String userText,
             String userImageText,
+            String targetCompany,
             String jobText,
             String jobImageText,
             String currentCountry,
@@ -114,6 +117,9 @@ public class SelfResumeAiService {
                 %s
 
                 [지원 대상 국가]
+                %s
+                
+                [지원 회사]
                 %s
 
                 [이력서 - 직접 입력 텍스트]
@@ -130,6 +136,7 @@ public class SelfResumeAiService {
                 """.formatted(
                 nullToEmpty(currentCountry),
                 nullToEmpty(targetCountry),
+                nullToEmpty(targetCompany),
                 nullToEmpty(userText),
                 nullToEmpty(userImageText),
                 nullToEmpty(jobText),
@@ -146,7 +153,7 @@ public class SelfResumeAiService {
 
 
     //이미지 ->텍스트 추출 테스트 함수
-    public String imageTextTest(SelfResumeAiAnalysisRequest request){
+    public String imageTextTest(SelfResumeAiAnalysisReqDto request){
         MultipartFile userImage = request.resumeImage();
         MultipartFile jobImage = request.jobImage();
 

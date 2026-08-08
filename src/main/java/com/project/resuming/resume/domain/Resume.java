@@ -17,6 +17,8 @@ public class Resume {
     @Column(name = "resume_id")
     private Long id;
 
+    private String targetCompany;
+
     @Column(columnDefinition = "TEXT")
     private String strengthAnalysis;
 
@@ -35,9 +37,10 @@ public class Resume {
     private Member member;
 
     @Builder
-    public Resume(String strengthAnalysis, String improvementAreas,
+    public Resume(String targetCompany, String strengthAnalysis, String improvementAreas,
                   String personalizedCoachingInsight, String aiRecommendedResumeContent,
                   Member member) {
+        this.targetCompany = targetCompany;
         this.strengthAnalysis = strengthAnalysis;
         this.improvementAreas = improvementAreas;
         this.personalizedCoachingInsight = personalizedCoachingInsight;

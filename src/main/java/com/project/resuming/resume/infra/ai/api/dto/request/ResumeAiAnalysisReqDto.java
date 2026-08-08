@@ -6,6 +6,7 @@ import lombok.Builder;
 public record ResumeAiAnalysisReqDto(
 		Resume resume,
 		String currentCountry,
+		String targetCompany,
 		JobPosting jobPosting
 ) {
 	@Builder

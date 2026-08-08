@@ -7,5 +7,6 @@ public record ResumeAiAnalysisRequest(
         MultipartFile resumeImage,
         String jobText,
         MultipartFile jobImage,
-        String targetCountry
+        String targetCountry,
+        String targetCompany
 ) {}

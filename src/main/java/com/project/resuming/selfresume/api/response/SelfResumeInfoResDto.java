@@ -8,6 +8,7 @@ import lombok.Builder;
 public record SelfResumeInfoResDto(
 
         Long resumeId,
+        String targetCompany,
         String strengthAnalysis,
         String improvementAreas,
         String personalizedCoachingInsight,
@@ -17,6 +18,8 @@ public record SelfResumeInfoResDto(
 
     public static SelfResumeInfoResDto from(SelfResume resume){
         return SelfResumeInfoResDto.builder()
+                .resumeId(resume.getId())
+                .targetCompany(resume.getTargetCompany())
                 .strengthAnalysis(resume.getStrengthAnalysis())
                 .improvementAreas(resume.getImprovementAreas())
                 .personalizedCoachingInsight(resume.getPersonalizedCoachingInsight())
