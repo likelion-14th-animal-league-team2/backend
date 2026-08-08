@@ -32,11 +32,8 @@ public class SecurityConfig {
                 .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                        .requestMatchers("/member/save" , "/member/login", "/member/auth/refresh").permitAll()
+                        .requestMatchers("/member/localsignup" , "/member/locallogin").permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                        .requestMatchers("/login/oauth2/code/google").permitAll()
-                                .requestMatchers("/login/oauth2/code/kakao").permitAll()
-                                .requestMatchers("/login/oauth2/code/naver").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)

@@ -18,6 +18,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
+import java.util.Collections;
 import java.util.Date;
 
 
@@ -96,9 +97,9 @@ public class JwtTokenProvider {
 
         Long memberId = Long.parseLong(claims.getSubject());
 
-        Member member = memberRepository.findById(memberId).orElseThrow();
+//        Member member = memberRepository.findById(memberId).orElseThrow();
 
-        return new UsernamePasswordAuthenticationToken(member.getMemberId(), "");
+        return new UsernamePasswordAuthenticationToken(memberId, "", Collections.emptyList());
     }
 
 

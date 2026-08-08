@@ -9,6 +9,7 @@ import com.project.resuming.selfresume.api.response.SelfResumeInfoResDto;
 import com.project.resuming.selfresume.domain.SelfResume;
 import com.project.resuming.selfresume.domain.repository.SelfResumeRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +24,7 @@ public class SelfResumeService {
     private final SelfResumeRepository resumeTempRepository;
     private final MemberRepository memberRepository;
 
-    //id로 조회
+    //selfresume 1개 조회 - resume pk로 조회
     public SelfResumeInfoResDto findById(Long id){
         SelfResume selfResume = resumeTempRepository.findById(id)
                 .orElseThrow(() -> new BusinessException(
@@ -34,7 +35,7 @@ public class SelfResumeService {
         return SelfResumeInfoResDto.from(selfResume);
     }
 
-    //전체 조회
+    //member별 selfresume전체 조회
     public SelfResumeInfoListResDto findAll(Long memberId){
 
         Member member = memberRepository.findById(memberId)
