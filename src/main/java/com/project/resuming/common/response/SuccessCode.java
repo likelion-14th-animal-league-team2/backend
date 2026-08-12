@@ -13,6 +13,7 @@ public enum SuccessCode {
     GET_SUCCESS(HttpStatus.OK, "성공적으로 조회했습니다."),
     MEMBER_UPDATE_SUCCESS(HttpStatus.OK, "사용자가 성공적으로 수정되었습니다."),
     MEMBER_DELETE_SUCCESS(HttpStatus.OK, "사용자가 성공적으로 삭제되었습니다."),
+    LOGIN_SUCCESS(HttpStatus.OK, "로그인에 성공하였습니다."),
 
 
     //201 CREATED (생성 성공)

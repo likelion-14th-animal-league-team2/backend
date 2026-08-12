@@ -17,11 +17,12 @@ public enum ErrorCode {
     VALIDATION_EXCEPTION(HttpStatus.BAD_REQUEST, "유효성 검사에 실패하였습니다 - "),
     ALREADY_EXIST_EMAIL(HttpStatus.BAD_REQUEST, "이미 가입된 이메일입니다"),
     INVALID_PASSWORD(HttpStatus.BAD_REQUEST, "비밀번호가 일치하지 않습니다"),
+    KAKAO_EMAIL_NOT_FOUND_EXCEPTION(HttpStatus.BAD_REQUEST, "카카오 계정에서 이메일을 가져올 수 없습니다."),
 
 
     //401 UNAUTHORIZED
     NO_AUTHORIZATION_EXCEPTION(HttpStatus.UNAUTHORIZED, "권한이 없습니다."),
-
+    KAKAO_LOGIN_FAILED_EXCEPTION(HttpStatus.UNAUTHORIZED, "카카오 로그인에 실패했습니다."),
 
     // 500 INTERNAL SERVER ERROR (내부 서버 에러)
     IMAGE_CONVERSION_TO_TEXT_FAILED(HttpStatus.INTERNAL_SERVER_ERROR, "이미지 텍스트 변환에 실해하였습니다"),
