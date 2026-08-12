@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 
 public record MemberCompleteProfileReqDto(
 
-        @Min(value = 5, message = "나이는 5 이상이어야 합니다.")
+        @Min(value = 5, message = "나이는 20 이상이어야 합니다.")
         @Max(value = 110, message = "나이는 110 이하여야 합니다.")
         int age,
 

@@ -16,7 +16,7 @@ import com.project.resuming.member.api.response.MemberInfoResDto;
 @Tag(name = "Member", description = "회원 관련 API")
 public interface MemberControllerDocs {
 
-    @Operation(summary = "회원가입", description = "소셜 로그인 후 최초 1회 나이와 나라 정보를 입력받아 프로필을 완성합니다.")
+    @Operation(summary = "카카오 최초 회원가입", description = "소셜 로그인 후 최초 1회 나이와 나라 정보를 입력받아 프로필을 완성합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "추가 정보 입력 성공"),
             @ApiResponse(responseCode = "400", description = "입력값 검증 실패"),

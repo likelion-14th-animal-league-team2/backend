@@ -11,7 +11,7 @@ public record MemberLoginReqDto(
         @Email(message = "올바른 이메일 형식이 아닙니다.")
         String email,
 
-        @Schema(description = "회원 비밀번호", example = "규칙없음")
+        @Schema(description = "회원 비밀번호", example = "12341234")
         @NotBlank(message = "비밀번호는 필수입니다.")
         String password
 

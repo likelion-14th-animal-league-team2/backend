@@ -1,4 +1,4 @@
-package com.project.resuming.kakao.api.dto.response;
+package com.project.resuming.security.oauth.kakao.api.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
