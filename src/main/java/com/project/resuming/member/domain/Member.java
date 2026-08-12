@@ -1,7 +1,6 @@
 package com.project.resuming.member.domain;
 
 import com.project.resuming.member.api.request.MemberCompleteProfileReqDto;
-import com.project.resuming.member.api.request.MemberSignUpReqDto;
 import com.project.resuming.member.api.request.MemberUpdateReqDto;
 import com.project.resuming.selfresume.domain.SelfResume;
 import jakarta.persistence.*;
@@ -49,14 +48,14 @@ public class Member {
         this.profileCompleted = profileCompleted;
     }
 
-    public void completeProfile(MemberCompleteProfileReqDto memberCompleteProfileDto){
-        this.age = memberCompleteProfileDto.age();
-        this.country = memberCompleteProfileDto.country();
-    }
-
     public void update(MemberUpdateReqDto memberUpdateDto){
         this.age = memberUpdateDto.age();
         this.country = memberUpdateDto.country();
+    }
+
+    public void completeProfile(Integer age, String country) {
+        this.age = age;
+        this.country = country;
     }
 
 }
