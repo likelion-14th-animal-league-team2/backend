@@ -1,9 +1,9 @@
-package com.project.resuming.kakao.application;
+package com.project.resuming.security.oauth.kakao.application;
 
 import com.project.resuming.common.exception.BusinessException;
 import com.project.resuming.common.response.ErrorCode;
-import com.project.resuming.kakao.api.dto.response.KakaoTokenResponse;
-import com.project.resuming.kakao.api.dto.response.KakaoUserInfoResponse;
+import com.project.resuming.security.oauth.kakao.api.dto.response.KakaoTokenResponse;
+import com.project.resuming.security.oauth.kakao.api.dto.response.KakaoUserInfoResponse;
 import com.project.resuming.security.dto.response.LoginResponseDto;
 import com.project.resuming.member.domain.Member;
 import com.project.resuming.member.domain.repository.MemberRepository;

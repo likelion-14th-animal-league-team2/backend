@@ -1,9 +1,9 @@
-package com.project.resuming.kakao.api;
+package com.project.resuming.security.oauth.kakao.api;
 
 import com.project.resuming.common.response.ApiResTemplate;
 import com.project.resuming.common.response.SuccessCode;
 import com.project.resuming.security.dto.response.LoginResponseDto;
-import com.project.resuming.kakao.application.KakaoOAuthService;
+import com.project.resuming.security.oauth.kakao.application.KakaoOAuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
