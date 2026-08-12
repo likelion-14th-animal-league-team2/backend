@@ -58,5 +58,16 @@ public class ResumeService {
         return resumList;
     }
 
+    //resume삭제
+    @Transactional
+    public void delete(Long resumeId){
+        Resume resume = resumeRepository.findById(resumeId).orElseThrow(()-> new BusinessException(
+                ErrorCode.RESUME_NOT_FOUND_EXCEPTION,
+                ErrorCode.RESUME_NOT_FOUND_EXCEPTION.getMessage() + resumeId
+        ));
+
+        resumeRepository.delete(resume);
+    }
+
 
 }
