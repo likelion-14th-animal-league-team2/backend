@@ -26,7 +26,6 @@ public class JwtAuthorizationFilter extends GenericFilterBean {
             IOException, ServletException {
         String token = resolveToken((HttpServletRequest) request);
 
-        System.out.println("=== 추출된 토큰: " + token);  // 임시 디버깅 로그
 
         if (token != null && jwtTokenProvider.validateToken(token)) {
             Authentication authentication = jwtTokenProvider.getAuthentication(token);

@@ -1,8 +1,10 @@
 package com.project.resuming.resume.api.request;
 
+import lombok.Builder;
 import org.springframework.web.multipart.MultipartFile;
 
-public record ResumeAiAnalysisRequest(
+@Builder
+public record ResumeToBackReqDto(
         String resumeText,
         MultipartFile resumeImage,
         String jobText,

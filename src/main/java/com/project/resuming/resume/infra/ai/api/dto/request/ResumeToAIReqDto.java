@@ -3,7 +3,7 @@ package com.project.resuming.resume.infra.ai.api.dto.request;
 import lombok.Builder;
 
 @Builder
-public record ResumeAiAnalysisReqDto(
+public record ResumeToAIReqDto(
 		Resume resume,
 		String currentCountry,
 		String targetCompany,
