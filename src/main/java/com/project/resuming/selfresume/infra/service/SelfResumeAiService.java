@@ -154,12 +154,10 @@ public class SelfResumeAiService {
 
     //이미지 ->텍스트 추출 테스트 함수
     public String imageTextTest(SelfResumeAiAnalysisReqDto request){
-        MultipartFile userImage = request.resumeImage();
-        MultipartFile jobImage = request.jobImage();
 
-        String userImageText = imageTextAiExtractionService.extractImageText(userImage);
-        String jobImageText = imageTextAiExtractionService.extractImageText(jobImage);
-        return userImageText + " ::::::::::: " + jobImageText;
+        String resumeImageText = imageTextAiExtractionService.extractImageText(request.resumeImage());
+        String jobImageText = imageTextAiExtractionService.extractImageText(request.jobImage());
+        return resumeImageText + " ::::::::::: " + jobImageText;
 
     }
 

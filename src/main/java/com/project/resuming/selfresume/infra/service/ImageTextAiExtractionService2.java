@@ -22,6 +22,7 @@ public class ImageTextAiExtractionService2 {
 
     //llm호출해서 이미지에서 텍스트 추출
     public String extractImageText(MultipartFile image){
+
         if (image == null || image.isEmpty()){
             return "";
         }

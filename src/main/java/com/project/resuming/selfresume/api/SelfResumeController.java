@@ -5,7 +5,9 @@ import com.project.resuming.common.response.SuccessCode;
 import com.project.resuming.selfresume.api.request.SelfResumeAiAnalysisReqDto;
 import com.project.resuming.selfresume.api.response.SelfResumeInfoListResDto;
 import com.project.resuming.selfresume.api.response.SelfResumeInfoResDto;
+import com.project.resuming.selfresume.api.response.SelfResumeSummaryResDto;
 import com.project.resuming.selfresume.application.SelfResumeService;
+import com.project.resuming.selfresume.infra.service.ImageTextAiExtractionService2;
 import com.project.resuming.selfresume.infra.service.SelfResumeAiService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -13,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,6 +26,7 @@ public class SelfResumeController {
 
     private final SelfResumeService resumeService;
     private final SelfResumeAiService resumeAiService;
+    private final ImageTextAiExtractionService2 imageTextAiExtractionService2;
 
     //selfresume Id조회
     @GetMapping("{id}")
@@ -33,9 +38,9 @@ public class SelfResumeController {
 
     @GetMapping()
     @Operation(summary = "selfresume 전체 조회", description = "멤버가 가지고 있는 selfresume전체를 찾습니다. List반환")
-    public ApiResTemplate<SelfResumeInfoListResDto> findAll(@AuthenticationPrincipal Long memberId){
-        SelfResumeInfoListResDto resumeInfoListRes = resumeService.findAll(memberId);
-        return ApiResTemplate.successResponse(SuccessCode.GET_SUCCESS, resumeInfoListRes);
+    public ApiResTemplate<List<SelfResumeSummaryResDto>> findAll(@AuthenticationPrincipal Long memberId){
+        List<SelfResumeSummaryResDto> all = resumeService.findAll(memberId);
+        return ApiResTemplate.successResponse(SuccessCode.GET_SUCCESS, all);
     }
 
     @Operation(summary = "ai가 이력서, 자소서를 분석합니다.", description = "이력서 제출")
@@ -46,6 +51,16 @@ public class SelfResumeController {
         SelfResumeInfoResDto resumeAiAdvice = resumeAiService.getResumeAiAdvice(request, memberId);
         return ApiResTemplate.successResponse(SuccessCode.GET_SUCCESS, resumeAiAdvice);
     };
+
+    @Operation(summary = "사진에서 텍스트 추출 api", description = "사진에서 텍스트 추출 api")
+    @PostMapping(value = "/aitext", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ApiResTemplate<String> imageToText(
+            @ModelAttribute SelfResumeAiAnalysisReqDto request, @AuthenticationPrincipal  Long memberId
+    ) {
+        String s = resumeAiService.imageTextTest(request);
+        return ApiResTemplate.successResponse(SuccessCode.GET_SUCCESS, s);
+    };
+
 
 
 

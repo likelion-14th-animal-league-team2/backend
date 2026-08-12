@@ -6,6 +6,7 @@ import com.project.resuming.member.domain.Member;
 import com.project.resuming.member.domain.repository.MemberRepository;
 import com.project.resuming.selfresume.api.response.SelfResumeInfoListResDto;
 import com.project.resuming.selfresume.api.response.SelfResumeInfoResDto;
+import com.project.resuming.selfresume.api.response.SelfResumeSummaryResDto;
 import com.project.resuming.selfresume.domain.SelfResume;
 import com.project.resuming.selfresume.domain.repository.SelfResumeRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,12 +22,12 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class SelfResumeService {
 
-    private final SelfResumeRepository resumeTempRepository;
+    private final SelfResumeRepository selfResumeRepository;
     private final MemberRepository memberRepository;
 
     //selfresume 1개 조회 - resume pk로 조회
     public SelfResumeInfoResDto findById(Long id){
-        SelfResume selfResume = resumeTempRepository.findById(id)
+        SelfResume selfResume = selfResumeRepository.findById(id)
                 .orElseThrow(() -> new BusinessException(
                         ErrorCode.RESUME_NOT_FOUND_EXCEPTION,
                         ErrorCode.RESUME_NOT_FOUND_EXCEPTION.getMessage() + id
@@ -36,7 +37,7 @@ public class SelfResumeService {
     }
 
     //member별 selfresume전체 조회
-    public SelfResumeInfoListResDto findAll(Long memberId){
+    public List<SelfResumeSummaryResDto> findAll(Long memberId){
 
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new BusinessException(
@@ -44,8 +45,8 @@ public class SelfResumeService {
                         ErrorCode.MEMBER_NOT_FOUND_EXCEPTION.getMessage()
                 ));
 
-        List<SelfResumeInfoResDto> resumList = resumeTempRepository.findByMember(member).stream().map(SelfResumeInfoResDto::from).toList();
-        return SelfResumeInfoListResDto.from(resumList);
+        List<SelfResumeSummaryResDto> resumList = selfResumeRepository.findByMember(member).stream().map(SelfResumeSummaryResDto::of).toList();
+        return resumList;
     }
 
 
