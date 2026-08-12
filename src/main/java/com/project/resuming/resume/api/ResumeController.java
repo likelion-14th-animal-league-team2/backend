@@ -54,6 +54,14 @@ public class ResumeController {
         return ApiResTemplate.successResponse(SuccessCode.GET_SUCCESS, all);
     }
 
+    //resume pk로 삭제
+    @DeleteMapping("/{resumeId}")
+    @Operation(summary = "resume id삭제", description = "resume pk값을 가지고 삭제합니다")
+    public ApiResTemplate<Void> delete(@PathVariable Long resumeId){
+        resumeService.delete(resumeId);
+        return ApiResTemplate.successWithNoContent(SuccessCode.RESUME_DELETE_SUCCESS);
+    }
+
 
     //추후 ai서버 생성되면 전부 수정
     @PostMapping(value = "/imagetext", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

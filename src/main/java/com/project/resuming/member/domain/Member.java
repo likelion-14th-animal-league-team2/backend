@@ -1,7 +1,7 @@
 package com.project.resuming.member.domain;
 
-import com.project.resuming.member.api.request.MemberCompleteProfileReqDto;
 import com.project.resuming.member.api.request.MemberUpdateReqDto;
+import com.project.resuming.resume.domain.Resume;
 import com.project.resuming.selfresume.domain.SelfResume;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -32,20 +32,24 @@ public class Member {
 
     private String password;
 
-    @Column(name = "is_profile_completed")
-    private boolean profileCompleted; //추후 카톡 로그인에 사용
+//    @Column(name = "is_profile_completed")
+//    private boolean profileCompleted;
+
+    @OneToMany(mappedBy ="member", orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<Resume> resumes = new ArrayList<>();
 
     @OneToMany(mappedBy ="member", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<SelfResume> selfResumes = new ArrayList<>();
 
+
+
     @Builder
-    public Member(String name, int age, String country, String email, String password, boolean profileCompleted) {
+    public Member(String name, int age, String country, String email, String password) {
         this.name = name;
         this.age = age;
         this.country = country;
         this.email = email;
         this.password = password;
-        this.profileCompleted = profileCompleted;
     }
 
     public void update(MemberUpdateReqDto memberUpdateDto){
